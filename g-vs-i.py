@@ -24,16 +24,6 @@ img = load_img('data/train/greek/greek.1.jpg')  # this is a PIL image
 x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
 x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
 
-'''
-# the .flow() command below generates batches of randomly transformed images
-# and saves the results to the `preview/` directory
- i = 0
- for batch in datagen.flow(x, batch_size=1,
-                          save_to_dir='preview', save_prefix='greek', save_format='jpeg'):
-    i += 1
-    if i > 20:
-        break  # otherwise the generator would loop indefinitely
-'''
 # begin building the model, 15 layers, output is 3d feature maps
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=(150, 150, 3)))
@@ -74,10 +64,10 @@ test_datagen = ImageDataGenerator(rescale=1./255) # augmentation for test data, 
 
 # generator to read pictures and generate batches of augmented images
 train_generator = train_datagen.flow_from_directory(
-        'data/train',  # this is the target directory
-        target_size=(150, 150),  # all images will be resized to 150x150
+        'data/train', 
+        target_size=(150, 150),  # 150x150
         batch_size=batch_size,
-        class_mode='binary')  # since we use binary_crossentropy loss, we need binary labels
+        class_mode='binary')  # binary_crossentropy loss
 
 validation_generator = test_datagen.flow_from_directory(
         'data/valid',
@@ -96,4 +86,4 @@ model.fit_generator(
         validation_data=validation_generator,
         validation_steps=800 // batch_size,
         callbacks=[tensorboard])
-model.save_weights('first_try.h5')  # always save your weights after training or during training
+model.save_weights('weights_gi.h5')
