@@ -1,6 +1,5 @@
 from __future__ import print_function
 import keras
-from keras.datasets import cifar10
 from keras.preprocessing.image import *
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Activation, Flatten
