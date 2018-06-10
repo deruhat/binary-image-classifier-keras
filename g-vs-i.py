@@ -20,10 +20,6 @@ datagen = ImageDataGenerator(
         horizontal_flip=True,
         fill_mode='nearest')
 
-img = load_img('data/train/greek/greek.1.jpg')  # this is a PIL image
-x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
-x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
-
 # begin building the model, 15 layers, output is 3d feature maps
 model = Sequential()
 model.add(Conv2D(32, (3, 3), input_shape=(150, 150, 3)))
